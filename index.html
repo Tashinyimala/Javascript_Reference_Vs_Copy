@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Javascript_Reference_Vs_Copy</title>
+</head>
+<body>
+    <script>
+
+        let log = console.log;
+
+        // String, numbers and booleans - assign copy not reference.
+        let age  = 100;
+        let age2 = age;
+        log(age, age2); // 100, 100
+        age = 200;
+        log(age, age2); // 200, 100
+
+        let name = "tashi";
+        let name1 = name;
+        log(name, name1); // tashi tashi
+        name = "nyima";
+        log(name, name1); // nyima, tashi
+
+        // Array - assign reference
+        const numbers = ['One', 'Two', 'Three', 'Four'];
+        const num = numbers; // Point to array reference, not an array copy. Both point to same array.
+        log(numbers, num);
+
+        num[3] = 'Five';
+        log(numbers, num);
+
+            // Fix - copy array instead of reference
+            const num1 = numbers.slice();
+            num1[0] = 'Six';
+            log(numbers, num1);
+
+            // ES6 Spread
+            const num2 = [...numbers];
+            num2[0] = 'seven';
+            log(numbers, num2);
+
+            // Array.from method
+            const num3 = Array.from(numbers);
+            num3[0] = 'Eight';
+            log(numbers, num3);
+
+        // Objects
+        const person = {
+            name: 'Tashi Nyima',
+            age: 30
+        };
+
+        const soldier = person;
+        person.age = 54;
+        log(person, soldier); //{name: "Tashi Nyima", age: 54} {name: "Tashi Nyima", age: 54}
+
+            //Fix - copy object instead of referencing
+            const teacher = Object.assign({}, person, {rollNum: 1234, age: 44}); // Object.assign is one level deep
+            log(person, teacher); // {name: "Tashi Nyima", age: 54} {name: "Tashi Nyima", age: 44, rollNum: 1234}
+
+            //Object Spread
+            const girl = {...person};
+            girl.age = 18;
+            girl.name = "Tara";
+            log(person, girl); // {name: "Tashi Nyima", age: 54} {name: "Tara", age: 18}
+    </script>
+</body>
+</html>
